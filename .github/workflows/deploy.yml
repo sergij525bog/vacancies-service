@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  applicationfolder: src
+  applicationfolder: ../vacancies-service
   AWS_REGION: us-east-1
   S3BUCKET: codedeploystack-webappdeploymentbucket-xe9gn4b7yirw
 
