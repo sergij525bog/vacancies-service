@@ -1,10 +1,12 @@
 spring:
   application:
     name: vacancies-service
+  config:
+    import: optional:file:.env[.properties]
   r2dbc:
-    url: r2dbc:h2:mem:///testdb
-    username: sa
-    password: password
+    url: r2dbc:h2:mem:${H2_DB_NAME}
+    username: ${H2_USERNAME}
+    password: ${H2_PASSWORD}
   h2:
     console:
       enabled: true
@@ -17,9 +19,14 @@ spring:
     open-in-view: false
     show-sql: true
 server:
-  port: 5000
+  port: ${SERVER_PORT}
 logging:
   level:
     org:
       springframework:
         r2dbc: DEBUG
+config:
+  json:
+    max-in-memory-size: ${CONFIG_JSON_MAX_IN_MEMORY_SIZE}
+  api:
+    url: ${CONFIG_API_URL}

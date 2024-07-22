@@ -10,16 +10,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class VacancyService {
+    private final Set<String> sortableFields = Set.of("created_at", "location", "title", "companyName");
     private final VacancyRepository repository;
 
     public Flux<Vacancy> findAllPageable(int page, int size, String sort, String order) {
+        final String sortBy = sortableFields.contains(sort)
+                ? sort
+                : "createdAt";
+
         final PageRequest pageRequest = PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.fromString(order), sort));
+                Sort.by(Sort.Direction.fromString(order), sortBy));
         return repository.findAllBy(pageRequest);
     }
 

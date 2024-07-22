@@ -11,10 +11,18 @@ import reactor.core.publisher.Flux;
 
 @Repository
 public interface VacancyRepository extends ReactiveCrudRepository<Vacancy, Long> {
-    @Query("select v.location as city, count(v.id) as count from Vacancy as v group by v.location order by v.location")
+    @Query("""
+                select v.location as city, count(v.id) as count
+                from Vacancy as v
+                group by v.location order by v.location""")
     Flux<CityVacanciesCountDto> findLocationAndVacancyCount();
 
-    @Query("select v.title as name, count(v.id) as count from Vacancy v group by v.title order by count desc limit 10")
+    @Query("""
+                select v.title as name, count(v.id) as count
+                from Vacancy v
+                group by v.title
+                order by count desc
+                limit 10""")
     Flux<VacanciesNameWithCountDto> findMostPopularVacations();
 
     @Query("select v.slug as slug from Vacancy v")
