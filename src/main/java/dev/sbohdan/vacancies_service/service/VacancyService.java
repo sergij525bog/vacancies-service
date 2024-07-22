@@ -1,8 +1,8 @@
 package dev.sbohdan.vacancies_service.service;
 
-import dev.sbohdan.vacancies_service.entity.Vacancy;
 import dev.sbohdan.vacancies_service.dto.CityVacanciesCountDto;
 import dev.sbohdan.vacancies_service.dto.VacanciesNameWithCountDto;
+import dev.sbohdan.vacancies_service.entity.Vacancy;
 import dev.sbohdan.vacancies_service.reposotory.VacancyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

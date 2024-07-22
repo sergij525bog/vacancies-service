@@ -1,8 +1,8 @@
 package dev.sbohdan.vacancies_service.reposotory;
 
-import dev.sbohdan.vacancies_service.entity.Vacancy;
 import dev.sbohdan.vacancies_service.dto.CityVacanciesCountDto;
 import dev.sbohdan.vacancies_service.dto.VacanciesNameWithCountDto;
+import dev.sbohdan.vacancies_service.entity.Vacancy;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

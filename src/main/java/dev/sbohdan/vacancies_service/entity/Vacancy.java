@@ -1,10 +1,12 @@
 package dev.sbohdan.vacancies_service.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.*;
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public record Vacancy(
         List<String> tags,
         List<String> jobTypes,
         String location,
-        long createdAt
+        LocalDateTime createdAt
 ) {
 
     public static Vacancy fromJson(JsonNode jsonNode) {
@@ -36,7 +38,7 @@ public record Vacancy(
                 .tags(getListFromJson(jsonNode, "tags"))
                 .jobTypes(getListFromJson(jsonNode, "job_types"))
                 .location(jsonNode.get("location").asText())
-                .createdAt(jsonNode.get("created_at").asLong())
+                .createdAt(getCreatedAt(jsonNode))
                 .build();
     }
 
@@ -47,5 +49,12 @@ public record Vacancy(
                 .forEach(field -> list.add(field.asText()));
 
         return list;
+    }
+
+    private static LocalDateTime getCreatedAt(JsonNode jsonNode) {
+        return LocalDateTime.ofEpochSecond(
+                jsonNode.get("created_at").asLong(),
+                0,
+                ZoneOffset.UTC);
     }
 }
