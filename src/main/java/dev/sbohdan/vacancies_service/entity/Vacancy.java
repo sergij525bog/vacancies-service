@@ -5,8 +5,6 @@ import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public record Vacancy(
         List<String> tags,
         List<String> jobTypes,
         String location,
-        LocalDateTime createdAt
+        long createdAt
 ) {
 
     public static Vacancy fromJson(JsonNode jsonNode) {
@@ -38,7 +36,7 @@ public record Vacancy(
                 .tags(getListFromJson(jsonNode, "tags"))
                 .jobTypes(getListFromJson(jsonNode, "job_types"))
                 .location(jsonNode.get("location").asText())
-                .createdAt(getCreatedAt(jsonNode))
+                .createdAt(jsonNode.get("created_at").asLong())
                 .build();
     }
 
@@ -49,12 +47,5 @@ public record Vacancy(
                 .forEach(field -> list.add(field.asText()));
 
         return list;
-    }
-
-    private static LocalDateTime getCreatedAt(JsonNode jsonNode) {
-        return LocalDateTime.ofEpochSecond(
-                jsonNode.get("created_at").asLong(),
-                0,
-                ZoneOffset.UTC);
     }
 }

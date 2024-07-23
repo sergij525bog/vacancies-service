@@ -2,7 +2,7 @@ package dev.sbohdan.vacancies_service.service;
 
 import dev.sbohdan.vacancies_service.dto.CityVacanciesCountDto;
 import dev.sbohdan.vacancies_service.dto.VacanciesNameWithCountDto;
-import dev.sbohdan.vacancies_service.entity.Vacancy;
+import dev.sbohdan.vacancies_service.dto.VacancyDto;
 import dev.sbohdan.vacancies_service.reposotory.VacancyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +18,7 @@ public class VacancyService {
     private final Set<String> sortableFields = Set.of("created_at", "location", "title", "companyName");
     private final VacancyRepository repository;
 
-    public Flux<Vacancy> findAllPageable(int page, int size, String sort, String order) {
+    public Flux<VacancyDto> findAllPageable(int page, int size, String sort, String order) {
         final String sortBy = sortableFields.contains(sort)
                 ? sort
                 : "createdAt";
@@ -27,7 +27,7 @@ public class VacancyService {
                 page,
                 size,
                 Sort.by(Sort.Direction.fromString(order), sortBy));
-        return repository.findAllBy(pageRequest);
+        return repository.findAllAsDto(pageRequest);
     }
 
     public Flux<CityVacanciesCountDto> getVacancyStatistics() {
