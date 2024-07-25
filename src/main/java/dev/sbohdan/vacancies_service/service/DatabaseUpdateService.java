@@ -25,16 +25,14 @@ public class DatabaseUpdateService {
                 .findVacanciesSlug()
                 .collectList()
                 .block();
+        Objects.requireNonNull(existedVacancies);
 
         webClient.get()
                 .exchangeToMono(response -> response.bodyToMono(JsonNode.class))
                 .map(json -> json.get("data"))
                 .flatMapMany(Flux::fromIterable)
                 .map(Vacancy::fromJson)
-                .filter(vacancy -> {
-                    Objects.requireNonNull(existedVacancies);
-                    return !existedVacancies.contains(vacancy.slug());
-                })
+                .filter(vacancy -> !existedVacancies.contains(vacancy.slug()))
                 .flatMap(repository::save)
                 .subscribe();
     }

@@ -4,7 +4,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.lang.NonNull;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -12,8 +11,6 @@ import java.time.ZoneOffset;
 public class LongToLocalDateTimeReadConverter implements Converter<Long, LocalDateTime> {
     @Override
     public LocalDateTime convert(@NonNull Long source) {
-        return LocalDateTime.ofInstant(
-                Instant.ofEpochSecond(source),
-                ZoneOffset.UTC);
+        return LocalDateTime.ofEpochSecond(source, 0, ZoneOffset.UTC);
     }
 }

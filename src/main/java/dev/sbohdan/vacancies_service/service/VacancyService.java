@@ -15,7 +15,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class VacancyService {
-    private final Set<String> sortableFields = Set.of("created_at", "location", "title", "companyName");
+    private final Set<String> sortableFields = Set.of("createdAt", "location", "title", "companyName");
     private final VacancyRepository repository;
 
     public Flux<VacancyDto> findAllPageable(int page, int size, String sort, String order) {
